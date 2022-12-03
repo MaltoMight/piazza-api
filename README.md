@@ -1,8 +1,9 @@
 # piazza-api
 
-[![PyPI version](https://badge.fury.io/py/piazza-api.png)](http://badge.fury.io/py/piazza-api)
+<!-- [![PyPI version](https://badge.fury.io/py/piazza-api.png)](http://badge.fury.io/py/piazza-api) -->
 
-Unofficial Client for Piazza's Internal API
+Unofficial Client for Piazza's Internal API (Modified)
+[Original Source Code](https://github.com/hfaran/piazza-api)
 
 
 ## Usage
@@ -53,21 +54,22 @@ Password: ...
 
 You've seen this before and you'll see it again.
 
-```bash
+<!-- ```bash
 # The easy way
 pip install piazza-api
-```
+``` -->
 
+<!-- git clone https://github.com/hfaran/piazza-api
+cd piazza-api -->
 ```bash
 # The developer way
-git clone https://github.com/hfaran/piazza-api
 cd piazza-api
 python setup.py develop
 ```
 
+<!-- git clone https://github.com/hfaran/piazza-api -->
 ```bash
 # The Docker way
-git clone https://github.com/hfaran/piazza-api
 cd piazza-api
 docker build -t piazza-api .
 docker run -it piazza-api:latest
