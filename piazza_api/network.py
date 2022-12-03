@@ -1,7 +1,8 @@
 from collections import namedtuple
 
 from .rpc import PiazzaRPC
-
+import time
+from tqdm import tqdm
 
 ################
 # Feed Filters #
@@ -82,7 +83,7 @@ class Network(object):
         """
         return self._rpc.content_get(cid=cid)
 
-    def iter_all_posts(self, limit=None):
+    def iter_all_posts(self, limit=None,delay=0,status=True):
         """Get all posts visible to the current user
 
         This grabs you current feed and ids of all posts from it; each post
@@ -95,6 +96,9 @@ class Network(object):
             before the generator is exhausted and raises StopIteration.
             No special consideration is given to `0`; provide `None` to
             retrieve all posts.
+        :param delay: If given, will delay the request before the generator moves to the next iteration. 
+            Mainly to avoid being timeout from piazza server.
+        :param status: If give, will show progress of requests.
         :returns: An iterator which yields all posts which the current user
             can view
         :rtype: generator
@@ -103,8 +107,13 @@ class Network(object):
         cids = [post['id'] for post in feed["feed"]]
         if limit is not None:
             cids = cids[:limit]
-        for cid in cids:
+        l_bar='{l_bar}'
+        bar='{bar}'
+        r_bar='| {n_fmt}/{total_fmt} [{elapsed}' '{postfix}]'
+        bar_format='{}{}{}'.format(l_bar,bar,r_bar)
+        for cid in tqdm(cids,total=len(cids),disable=status,bar_format=bar_format):
             yield self.get_post(cid)
+            time.sleep(delay)
 
     def create_post(self, post_type, post_folders, post_subject, post_content, is_announcement=0, bypass_email=0, anonymous=False):
         """Create a post
