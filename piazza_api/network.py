@@ -103,6 +103,9 @@ class Network(object):
             can view
         :rtype: generator
         """
+        
+        if type(delay) != int or delay < 0:
+            raise TypeError("Invalid value for delay") 
         feed = self.get_feed(limit=999999, offset=0)
         cids = [post['id'] for post in feed["feed"]]
         if limit is not None:
